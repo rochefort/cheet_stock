@@ -1,0 +1,29 @@
+<%= form_for(@key_mapping) do |f| %>
+  <% if @key_mapping.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@key_mapping.errors.count, "error") %> prohibited this key_mapping from being saved:</h2>
+
+      <ul>
+      <% @key_mapping.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :key %><br />
+    <%= f.text_field :key %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </div>
+  <div class="field">
+    <%= f.label :ordinal %><br />
+    <%= f.number_field :ordinal %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

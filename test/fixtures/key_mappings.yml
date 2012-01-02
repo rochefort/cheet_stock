@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  key: MyString
+  content: MyString
+  ordinal: 1
+
+two:
+  key: MyString
+  content: MyString
+  ordinal: 1

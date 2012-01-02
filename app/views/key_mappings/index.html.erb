@@ -1,0 +1,27 @@
+<h1>Listing key_mappings</h1>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Content</th>
+    <th>Ordinal</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @key_mappings.each do |key_mapping| %>
+  <tr>
+    <td><%= key_mapping.key %></td>
+    <td><%= key_mapping.content %></td>
+    <td><%= key_mapping.ordinal %></td>
+    <td><%= link_to 'Show', key_mapping %></td>
+    <td><%= link_to 'Edit', edit_key_mapping_path(key_mapping) %></td>
+    <td><%= link_to 'Destroy', key_mapping, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Key mapping', new_key_mapping_path %>

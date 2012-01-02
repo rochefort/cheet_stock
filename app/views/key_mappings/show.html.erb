@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Key:</b>
+  <%= @key_mapping.key %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @key_mapping.content %>
+</p>
+
+<p>
+  <b>Ordinal:</b>
+  <%= @key_mapping.ordinal %>
+</p>
+
+
+<%= link_to 'Edit', edit_key_mapping_path(@key_mapping) %> |
+<%= link_to 'Back', key_mappings_path %>
