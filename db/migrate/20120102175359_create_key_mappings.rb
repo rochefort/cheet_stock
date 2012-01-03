@@ -4,6 +4,7 @@ class CreateKeyMappings < ActiveRecord::Migration
       t.string :key
       t.string :content
       t.integer :ordinal
+      t.references :group
 
       t.timestamps
     end
