@@ -1,5 +1,6 @@
 class KeyMappingsController < ApplicationController
   def index
+    @group_id = params[:group_id]
     @key_mappings = KeyMapping.all
   end
 
@@ -16,10 +17,11 @@ class KeyMappingsController < ApplicationController
   end
 
   def create
+    group_id = params[:group_id]
     @key_mapping = KeyMapping.new(params[:key_mapping])
 
     if @key_mapping.save
-      redirect_to @key_mapping, notice: 'Key mapping was successfully created.'
+      redirect_to group_key_mapping_path(group_id, @key_mapping), notice: 'Key mapping was successfully created.'
     else
       render action: "new"
     end
@@ -29,7 +31,7 @@ class KeyMappingsController < ApplicationController
     @key_mapping = KeyMapping.find(params[:id])
 
     if @key_mapping.update_attributes(params[:key_mapping])
-      redirect_to @key_mapping, notice: 'Key mapping was successfully updated.'
+      redirect_to [:group, @key_mapping], notice: 'Key mapping was successfully updated.'
     else
       render action: "edit"
     end
@@ -39,6 +41,6 @@ class KeyMappingsController < ApplicationController
     @key_mapping = KeyMapping.find(params[:id])
     @key_mapping.destroy
 
-    redirect_to key_mappings_url
+    redirect_to group_key_mappings_path
   end
 end

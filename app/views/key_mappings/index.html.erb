@@ -15,13 +15,13 @@
     <td><%= key_mapping.key %></td>
     <td><%= key_mapping.content %></td>
     <td><%= key_mapping.ordinal %></td>
-    <td><%= link_to 'Show', key_mapping %></td>
-    <td><%= link_to 'Edit', edit_key_mapping_path(key_mapping) %></td>
-    <td><%= link_to 'Destroy', key_mapping, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', group_key_mapping_path(@group_id, key_mapping) %></td>
+    <td><%= link_to 'Edit', edit_group_key_mapping_path(@group_id, key_mapping) %></td>
+    <td><%= link_to 'Destroy', group_key_mapping_path(@group_id, key_mapping), method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Key mapping', new_key_mapping_path %>
+<%= link_to 'New Key mapping', new_group_key_mapping_path %>

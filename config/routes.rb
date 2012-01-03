@@ -1,9 +1,10 @@
 CheetStock::Application.routes.draw do
   root :to => 'groups#index'
 
-  resources :key_mappings
+  resources :groups do
+    resources :key_mappings
+  end
 
-  resources :groups
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
