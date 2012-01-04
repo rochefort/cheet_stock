@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'webrat'
   gem 'capybara'
+  gem 'hirb-unicode'
 end
 group :test do
   # Pretty printed test output
