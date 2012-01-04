@@ -1,4 +1,9 @@
 class GroupsController < ApplicationController
+  def sort
+    params[:group].each_with_index{|row, i| Group.update(row, {:ordinal => i + 1})}
+    render :nothing => true
+  end
+
   def index
     @groups = Group.all
   end

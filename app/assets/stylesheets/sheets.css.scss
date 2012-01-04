@@ -1,0 +1,75 @@
+// Place all the styles related to the sheets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/* ------------------------------
+ Basic
+------------------------------ */
+body {
+  margin: 10px;
+  font-size: 12px;
+  line-height: 1.4em;
+}
+
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 0.8em;
+}
+
+h2 {
+  color: #271870;
+  font-weight: bold;
+  font-size: 1.1em;
+  border-left: 3px;
+}
+
+
+/* ------------------------------
+ Key Mapping
+------------------------------ */
+dl.key-mapping{
+  width: 100%;
+  
+  dt {
+    float: left;
+    width: 35%;
+    padding: 0 5px 3px 10px;
+    clear: both;
+  }
+  
+  dd {
+    padding: 0 5px 3px 10px;
+  }
+}
+
+/* ------------------------------
+ Drag and Drop
+------------------------------ */
+.column{
+  width:280px;
+  margin-right:.5%;
+  min-height:300px;
+  background:#fff;
+  float:left;
+
+  .dragbox{
+    margin:5px 2px 20px 0;
+    background:#fff;
+    position:relative;
+    border:1px solid #ddd;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+
+    h2{
+      margin-bottom:5px;
+      padding:5px;
+      background:#f0f0f0;
+      border-bottom:1px solid #eee;
+      cursor:move;
+    }
+  }
+
+  .placeholder{
+    background: #f0f0f0;
+    border:1px dashed #ddd;
+  }
+}

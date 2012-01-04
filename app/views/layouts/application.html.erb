@@ -2,8 +2,12 @@
 <html>
 <head>
   <title>CheetStock</title>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css">
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application",
+  "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js",
+  "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"
+  %>
   <%= csrf_meta_tags %>
 </head>
 <body>

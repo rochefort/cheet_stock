@@ -7,3 +7,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+$(function(){
+  $('.column').sortable({
+    connectWith: '.column',
+    handle: 'h2',
+    cursor: 'move',
+    placeholder: 'placeholder',
+    forcePlaceholderSize: true,
+    opacity: 0.4,
+    update: function() {
+      $.ajax({
+        url: '/groups/sort',
+        type: 'POST',
+        dataType: 'text',
+        data: $(this).sortable('serialize') + '&authenticity_token=' + $('#authenticity_token').val(),
+        
+      })
+    }
+  })
+  .disableSelection();
+});

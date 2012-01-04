@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120102175359) do
     t.string   "key"
     t.string   "content"
     t.integer  "ordinal"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

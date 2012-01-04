@@ -1,0 +1,14 @@
+<h1>vimチートシート</h1>
+<div class="column">
+<% @groups.each do |group| %>
+  <div class="dragbox" id="group_<%= group.id %>">
+    <h2><%= group.name %></h2>
+    <dl class="key-mapping">
+      <% group.key_mappings.each do |km| %>
+      <dt><%= km.key %></dt><dd><%= km.content %></dd>
+      <% end %>
+    </dl>
+  </div>
+<% end %>
+</div>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>

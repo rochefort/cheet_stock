@@ -4,18 +4,19 @@
   <tr>
     <th>Name</th>
     <th>Ordinal</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>KeyMappings数</th>
+    <th>Links</th>
   </tr>
 
 <% @groups.each do |group| %>
   <tr>
     <td><%= group.name %></td>
     <td><%= group.ordinal %></td>
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= group.key_mappings.size %></td>
+    <td><%= link_to 'KeyMappings', group_key_mappings_path(group) %>
+        <%= link_to 'Show', group %>
+        <%= link_to 'Edit', edit_group_path(group) %>
+        <%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
