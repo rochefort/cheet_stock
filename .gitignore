@@ -15,5 +15,5 @@
 /tmp
 
 # Ignore user files.
-/.swap
-/.DS_store
+/**/*.swap
+/**/.DS_store
