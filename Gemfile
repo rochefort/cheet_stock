@@ -35,6 +35,7 @@ group :development, :test do
   gem 'webrat'
   gem 'capybara'
   gem 'hirb-unicode'
+  gem 'RedCloth'
 end
 group :test do
   # Pretty printed test output
