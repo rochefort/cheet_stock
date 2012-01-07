@@ -2,7 +2,7 @@ CheetStock::Application.routes.draw do
   root :to => 'sheets#index'
   resources :groups do
     collection do
-      post 'sort'
+      post 'reorder'
     end
     resources :key_mappings
   end

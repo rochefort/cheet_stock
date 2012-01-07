@@ -15,20 +15,61 @@ h1 {
   margin-bottom: 0.8em;
 }
 
-h2 {
-  color: #271870;
-  font-weight: bold;
-  font-size: 1.1em;
-  border-left: 3px;
+/* ------------------------------
+ Button
+------------------------------ */
+#add-group {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  a {
+    text-decoration: none;
+    display: block;
+    padding: 25px 20px 5px;
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.85);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.65);
+    margin: -5px 300px;
+    color: black;
+    width: 1em;
+    background: #B7B7B7;
+  }
 }
 
+/* ------------------------------
+ Group
+------------------------------ */
+.group {
+  background: #f0f0f0;
+  
+  h2 {
+    color: #271870;
+    font-weight: bold;
+    font-size: 1.1em;
+    height: 1.1em;
+    width: 80%;
+    margin-bottom:5px;
+    padding:5px;
+    cursor:move;
+
+    .editor{
+      display: none;
+    }
+  }
+  span.delete-group {
+    border: 1px solid #AAA;
+    position: absolute;
+    top: 4px;
+    right: 3px;
+    cursor: pointer;
+  }
+}
 
 /* ------------------------------
  Key Mapping
 ------------------------------ */
 dl.key-mapping{
   width: 100%;
-  
   dt {
     float: left;
     width: 35%;
@@ -39,6 +80,11 @@ dl.key-mapping{
   dd {
     padding: 0 5px 3px 10px;
   }
+  
+  dd.nodata {
+    height: 1em;
+  }
+  
 }
 
 /* ------------------------------
@@ -58,14 +104,6 @@ dl.key-mapping{
     border:1px solid #ddd;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
-
-    h2{
-      margin-bottom:5px;
-      padding:5px;
-      background:#f0f0f0;
-      border-bottom:1px solid #eee;
-      cursor:move;
-    }
   }
 
   .placeholder{
