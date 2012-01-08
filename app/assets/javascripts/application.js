@@ -42,24 +42,9 @@ $(function(){
     });
   });
 
-  function display_viewer(viwer, editor) {
-    if (viwer.css('display') == 'none') {
-      viwer.css('display', 'block');
-      editor.css('display', 'none');
-    }
-  }
-
-  function display_editor(viwer, editor) {
-    if (editor.css('display') == 'none') {
-      viwer.css('display', 'none');
-      editor.css('display', 'block');
-    }
-  }
-
   $('h2').live('click', function(){
-    var viewer = $(this).find('.viewer');
     var editor = $(this).find('.editor');
-    display_editor(viewer, editor);
+    $(this).find('div').toggle();
     var txtbox_group = editor.find('input');
     txtbox_group.focus();
     // カーソルをテキストボックスの最後に移動
@@ -67,11 +52,8 @@ $(function(){
   });
   
   $('h2').live('blur', function(){
-    var viewer = $(this).find('.viewer');
-    var editor = $(this).find('.editor');
-
-    var group_name = editor.find('input').val();
-    viewer.text(group_name);
+    var group_name = $(this).find('.editor input').val();
+    $(this).find('.viewer').text(group_name);
 
     var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
     var group = {'name': group_name};
@@ -81,7 +63,7 @@ $(function(){
       dataType: 'json',
       data: {'_method': 'put', 'group': group}
     });
-    display_viewer(viewer, editor);
+    $(this).find('div').toggle();
   });
 
   $('.delete-group').live('click', function(){
