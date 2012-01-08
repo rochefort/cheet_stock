@@ -1,4 +1,4 @@
-<%= form_for([:group, @key_mapping]) do |f| %>
+<%= form_for([@group, @key_mapping]) do |f| %>
   <% if @key_mapping.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@key_mapping.errors.count, "error") %> prohibited this key_mapping from being saved:</h2>

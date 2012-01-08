@@ -1,4 +1,5 @@
 class KeyMappingsController < ApplicationController
+
   def index
     @group_id = params[:group_id]
     @key_mappings = KeyMapping.where(group_id: @group_id)
@@ -10,10 +11,12 @@ class KeyMappingsController < ApplicationController
 
   def new
     @key_mapping = KeyMapping.new
+    @group = Group.find(params[:group_id])
   end
 
   def edit
     @key_mapping = KeyMapping.find(params[:id])
+    @group = @key_mapping.group
   end
 
   def create
