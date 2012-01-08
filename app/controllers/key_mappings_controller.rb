@@ -29,9 +29,7 @@ class KeyMappingsController < ApplicationController
   end
 
   def update
-    group_id = params[:group_id]
     @key_mapping = KeyMapping.find(params[:id])
-    @key_mapping.group_id = group_id
 
     if @key_mapping.update_attributes(params[:key_mapping])
       redirect_to [:group, @key_mapping], notice: 'Key mapping was successfully updated.'
