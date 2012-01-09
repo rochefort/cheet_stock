@@ -9,6 +9,17 @@
 //= require jquery_ujs
 //= require_tree .
 $(function(){
+  
+  function ajaxWithJSON (url, data, succ_func) {
+    $.ajax({
+      url: url,
+      type: 'POST',
+      dataType: 'json',
+      data:  data,
+      success: succ_func
+    })
+  }
+
   $('.column').sortable({
     connectWith: '.column',
     handle: 'h2',
@@ -19,12 +30,7 @@ $(function(){
     update: function() {
       var objSort = $(this).sortable('serialize');
       objSort['authenticity_token'] = $('#authenticity_token').val();
-      $.ajax({
-        url: '/groups/reorder',
-        type: 'POST',
-        dataType: 'json',
-        data:  objSort
-      })
+      ajaxWithJSON('/groups/reorder', objSort);
     }
   })
   .disableSelection();
@@ -34,30 +40,24 @@ $(function(){
     cursor: 'move',
     opacity: 0.4,
     update: function(event, ui) {
-      var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];       
-      $.ajax({
-        url: '/groups/' + group_id + '/key_mappings/reorder',
-        type: 'POST',
-        dataType: 'text',
-        data: $(this).sortable('serialize') + '&authenticity_token=' + $('#authenticity_token').val()
-      })
+      var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
+      var objSort = $(this).sortable('serialize');
+      objSort['authenticity_token'] = $('#authenticity_token').val();
+      var url = '/groups/' + group_id + '/key_mappings/reorder';
+      ajaxWithJSON(url, objSort);
     }
   })
   .disableSelection();
 
   $('#add-group').click(function(){
-    $.ajax({
-      url: '/groups',
-      type: 'POST',
-      dataType: 'json',
-      success: function(ajax){
-        if (ajax.status === 'success') {
-          $('.column').append(ajax.html);
-          //TODO:focus
-          $('.key-mapping table tbody').sortable('refresh');
-        };
+    var succ_func = function(ajax){
+      if (ajax.status === 'success') {
+        $('.column').append(ajax.html);
+        //TODO:focus
+        $('.key-mapping table tbody').sortable('refresh');
       }
-    });
+    };
+    ajaxWithJSON('groups', '', succ_func);
   });
 
   $('.add-key-mapping').live('mouseover', function(){
@@ -71,17 +71,14 @@ $(function(){
   $('.add-key-mapping').live('click', function(){
     var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
     var parent_elm = $(this).closest('div.dragbox').find('table');
-    $.ajax({
-      url: '/groups/' + group_id + '/key_mappings/',
-      type: 'POST',
-      dataType: 'json',
-      success: function(ajax){
-        if (ajax.status === 'success') {
-          parent_elm.append(ajax.html);
-          //TODO:focus
-        };
+    var url = '/groups/' + group_id + '/key_mappings/';
+    var succ_func = function(ajax){
+      if (ajax.status === 'success') {
+        parent_elm.append(ajax.html);
+        //TODO:focus
       }
-    });
+    };
+    ajaxWithJSON(url, '', succ_func);
   });
 
   $('h2').live('click', function(){
@@ -94,12 +91,9 @@ $(function(){
 
     var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
     var group = {'name': group_name};
-    $.ajax({
-      url: '/groups/' + group_id,
-      type: 'POST',
-      dataType: 'json',
-      data: {'_method': 'put', 'group': group}
-    });
+    var url = '/groups/' + group_id;
+    var data = {'_method': 'put', 'group': group};
+    ajaxWithJSON(url, data);
     $(this).find('div').toggle();
   });
 
@@ -109,15 +103,10 @@ $(function(){
       title: "確認",
       buttons: {
         'yes': function(event) {
-          $.ajax({
-            url: '/groups/' + group_id,
-            type: 'POST',
-            dataType: 'json',
-            data: {'_method': 'delete'},
-            success: function (ajax){
-              $('#group-' + group_id).remove();
-            }
-          });
+          var url = '/groups/' + group_id;
+          var data = {'_method': 'delete'};
+          var succ_func = function (ajax){ $('#group-' + group_id).remove();};
+          ajaxWithJSON(url, data, succ_func);
           $(this).dialog("close");
         },
         'no': function(event) {
@@ -159,26 +148,15 @@ $(function(){
   });
 
   function ajaxUpdateKeyMapping (group_id, km_id, km) {
-    $.ajax({
-      url: '/groups/' + group_id + '/key_mappings/' + km_id,
-      type: 'POST',
-      dataType: 'json',
-      data: {'_method': 'put', 'key_mapping': km}
-    });
+    var url = '/groups/' + group_id + '/key_mappings/' + km_id;
+    var data = {'_method': 'put', 'key_mapping': km}
+    ajaxWithJSON(url, data);
   };
 
-  // viewer_text.text('');
-  // editor_text.val('');
-  
   function ajaxDeleteKeyMapping (group_id, km_id, viewer_text, editor_text) {
-    $.ajax({
-      url: '/groups/' + group_id + '/key_mappings/' + km_id,
-      type: 'POST',
-      dataType: 'json',
-      data: {'_method': 'delete'},
-      success: function (){
-      }
-    });
+    var url = '/groups/' + group_id + '/key_mappings/' + km_id;
+    var data = {'_method': 'delete'};
+    ajaxWithJSON(url, data);
   }
   
   function toggleElm(elm) {
