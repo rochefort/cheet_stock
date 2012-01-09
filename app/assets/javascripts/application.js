@@ -9,10 +9,38 @@
 //= require jquery_ujs
 //= require_tree .
 $(function(){
-  // $(window).keydown(function(e){
-  //   alert(e.keyCode);
-  //   return false;
-  // });
+  var KEY_CODE_TAB = 9;
+
+
+  // console.log(e.keyCode);
+  // console.log(e.shiftKey);
+  // console.log(e.ctrlKey);
+  // console.log(e.altKey);
+  $('td.key .editor input').keydown(function(e){
+    if (e.keyCode == KEY_CODE_TAB) {
+      var content = $(this).closest('tr').find('td.content');
+      toggleElm(content);
+      content.find('.editor input').focus();
+      return false;
+    };
+  });
+
+  $('td.content .editor input').keydown(function(e){
+    if (e.keyCode == KEY_CODE_TAB) {
+      if (e.shiftKey) {
+        var key = $(this).closest('tr').find('td.key');
+        toggleElm(key);
+        key.find('.editor input').focus();
+      } else {
+        var content = $(this).closest('tr').find('td.content');
+        toggleElm(content);
+        content.next().focus();
+      };
+      return false;
+    };
+  });
+
+
 
   function ajaxWithJSON (url, data, succ_func) {
     $.ajax({
@@ -130,15 +158,16 @@ $(function(){
 
   // key-mapping更新処理
   function updateKeyMapping (elm, column_name) {
+    // テキストボックスの内容でviewerを更新
     var val = elm.find('.editor input').val();
-    $(this).find('.viewer').text(val);
+    elm.find('.viewer').text(val);
 
     var group_id = elm.closest('div.dragbox').attr('id').split('-')[1];
-    var km_id = elm.parent().attr('id').split('-')[1];
+    var km_id = elm.parent().attr('id').split('-')[1];    
     var km = {};
     km[column_name] = val;
     ajaxUpdateKeyMapping(group_id, km_id, km);
-    $(this).find('div').toggle();
+    elm.find('div').toggle();
   };
   
   $('td.key').live('blur', function(){
