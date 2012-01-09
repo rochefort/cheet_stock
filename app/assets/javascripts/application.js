@@ -9,7 +9,11 @@
 //= require jquery_ujs
 //= require_tree .
 $(function(){
-  
+  // $(window).keydown(function(e){
+  //   alert(e.keyCode);
+  //   return false;
+  // });
+
   function ajaxWithJSON (url, data, succ_func) {
     $.ajax({
       url: url,
@@ -124,27 +128,25 @@ $(function(){
     toggleElm($(this));
   });
 
-  //TODO:抽象化
-  $('td.key').live('blur', function(){
-    var val = $(this).find('.editor input').val();
+  // key-mapping更新処理
+  function updateKeyMapping (elm, column_name) {
+    var val = elm.find('.editor input').val();
     $(this).find('.viewer').text(val);
 
-    var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
-    var km_id = $(this).parent().attr('id').split('-')[1];
-    var km = {'key': val};
+    var group_id = elm.closest('div.dragbox').attr('id').split('-')[1];
+    var km_id = elm.parent().attr('id').split('-')[1];
+    var km = {};
+    km[column_name] = val;
     ajaxUpdateKeyMapping(group_id, km_id, km);
     $(this).find('div').toggle();
+  };
+  
+  $('td.key').live('blur', function(){
+    updateKeyMapping($(this), 'key');
   });
 
   $('td.content').live('blur', function(){
-    var val = $(this).find('.editor input').val();
-    $(this).find('.viewer').text(val);
-
-    var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
-    var km_id = $(this).parent().attr('id').split('-')[1];
-    var km = {'content': val};
-    ajaxUpdateKeyMapping(group_id, km_id, km);
-    $(this).find('div').toggle();
+    updateKeyMapping($(this), 'content');
   });
 
   function ajaxUpdateKeyMapping (group_id, km_id, km) {
@@ -201,4 +203,3 @@ $(function(){
     });
   });
 });
-
