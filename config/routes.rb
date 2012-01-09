@@ -1,10 +1,15 @@
 CheetStock::Application.routes.draw do
   root :to => 'sheets#index'
+
   resources :groups do
     collection do
       post 'reorder'
     end
-    resources :key_mappings
+    resources :key_mappings do
+      collection do
+        post 'reorder'
+      end
+    end
   end
 
 

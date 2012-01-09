@@ -6,13 +6,12 @@
       </h2>
       <span class="delete-group ui-corner-all ui-icon ui-icon-close"></span>
     </div>
-    <dl class="key-mapping">
-      <% group.key_mappings.each do |km| %>
-      <%  if km.key.blank? and km.content.blank? %>
-      <dt><%= km.key %></dt><dd class="nodata"><%= km.content %></dd>
-      <% else %>
-      <dt><%= km.key %></dt><dd><%= km.content %></dd>
-      <% end %>
-      <% end %>
-    </dl>
+    <div class="key-mapping">
+      <table>
+        <% group.key_mappings.each do |km| %>
+          <%= render 'key_mapping', km: km %>
+        <% end %>
+      </table>
+    </div>
+    <div class="add-key-mapping" title="新規キーマッピングを追加します"></div>
   </div>

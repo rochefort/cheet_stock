@@ -1,0 +1,11 @@
+<tr id="keymapping-<%= km.id %>">
+  <td class="key<%= key_option(km) %>">
+    <div class="viewer"><%= km.key %></div>
+    <div class="editor"><input type="text" value="<%= km.key %>" /></div>
+  </td>
+  <td class="content">
+    <div class="viewer"><%= km.content %></div>
+    <div class="editor"><input type="text" value="<%= km.content %>" /></div>
+  </td>
+  <td class="delete-keymapping"><span class="ui-icon ui-icon ui-icon-circlesmall-close"></span></td>
+</tr>

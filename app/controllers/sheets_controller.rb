@@ -1,5 +1,5 @@
 class SheetsController < ApplicationController
   def index
-    @groups = Group.order('ordinal').includes(:key_mappings)
+    @groups = Group.order('groups.ordinal, key_mappings.ordinal').includes(:key_mappings)
   end
 end

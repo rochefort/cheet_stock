@@ -16,7 +16,7 @@ h1 {
 }
 
 /* ------------------------------
- Button
+ Action
 ------------------------------ */
 #add-group {
   position: absolute;
@@ -36,11 +36,18 @@ h1 {
   }
 }
 
+.add-key-mapping {
+  cursor: pointer;
+  width: 100%;
+  height: 10px;
+}
+
 /* ------------------------------
  Group
 ------------------------------ */
 .group {
   background: #f0f0f0;
+  position:relative;
   
   h2 {
     color: #271870;
@@ -52,14 +59,12 @@ h1 {
     padding:5px;
     cursor:move;
 
-    .editor{
-      display: none;
-    }
   }
+
   span.delete-group {
     border: 1px solid #AAA;
     position: absolute;
-    top: 4px;
+    top: 3px;
     right: 3px;
     cursor: pointer;
   }
@@ -68,23 +73,41 @@ h1 {
 /* ------------------------------
  Key Mapping
 ------------------------------ */
-dl.key-mapping{
-  width: 100%;
-  dt {
-    float: left;
-    width: 35%;
-    padding: 0 5px 3px 10px;
-    clear: both;
-  }
+.key-mapping {
   
-  dd {
-    padding: 0 5px 3px 10px;
+  table {
+    width: 100%;
+
+    tr {
+
+      td {
+        height: 18px;
+      }
+      
+      td.key {
+        width: 40%;
+        padding-left: 10px;
+      }
+
+      td.content {
+        width: 53%;
+      }
+
+      td.delete-keymapping {
+        width: 7%;
+        cursor: default;
+      }
+      td.delete-keymapping span {
+        display: none;
+      }
+    }
   }
-  
-  dd.nodata {
-    height: 1em;
+  .key .editor input{
+    width: 7em;
   }
-  
+  .content .editor input{
+    width: 10em;
+  }
 }
 
 /* ------------------------------
@@ -110,4 +133,17 @@ dl.key-mapping{
     background: #f0f0f0;
     border:1px dashed #ddd;
   }
+}
+
+
+/* ------------------------------
+ None display elements on defalt
+------------------------------ */
+.editor{
+  display: none;
+}
+
+#delete-group-msg,
+#delete-keymapping-msg {
+  display: none;
 }

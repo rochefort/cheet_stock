@@ -1,15 +1,12 @@
 class GroupsController < ApplicationController
+
   def reorder
-    params[:group].each_with_index{|row, i| Group.update(row, {:ordinal => i + 1})}
+    params[:group].each_with_index{|row, i| Group.update(row, {ordinal: i + 1})}
     render :nothing => true
   end
 
   def index
     @groups = Group.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @groups }
-    end
   end
 
   def show
@@ -28,19 +25,19 @@ class GroupsController < ApplicationController
     @group = Group.new(params[:group])
     if request.xhr?
       @group.ordinal = Group.next_ordinal
-      @group.key_mappings.build({key: '', content: '', ordinal: 1})
-      if @group.save
-        logger.info { @group.key_mappings }
-        status = 'success'
-        html = render_to_string partial: 'sheets/group', locals: { group: @group }
-      else
-        status = 'error'
-      end
-      render action: 'sheets/index', json: { status: status, data: @group, html: html}
-      return
+      #@group.key_mappings.build({key: '', content: '', ordinal: 1})
     end
     
-    if @group.save
+    status = @group.save
+    if request.xhr?
+      xhr_response_render_json(status) do
+        html = render_to_string partial: 'sheets/group', locals: { group: @group }
+        {html: html}
+      end
+      return
+    end
+
+    if status
       redirect_to @group, notice: 'Group was successfully created.'
     else
       render action: "new"
@@ -49,17 +46,10 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.find(params[:id])
-    if request.xhr?
-      if @group.update_attributes(params[:group])
-        status = 'success'
-      else
-        status = 'error'
-      end
-      render action: 'sheets/index', json: { status: status }
-      return
-    end
-    
-    if @group.update_attributes(params[:group])
+    status = @group.update_attributes(params[:group])
+    xhr_response_render_json(status) and return if request.xhr?
+
+    if status
       redirect_to @group, notice: 'Group was successfully updated.'
     else
       render action: "edit"
@@ -68,8 +58,8 @@ class GroupsController < ApplicationController
 
   def destroy    
     @group = Group.find(params[:id])
-    @group.destroy
-
+    status = @group.destroy
+    xhr_response_render_json(status) and return if request.xhr?
     redirect_to groups_url
   end
 end
