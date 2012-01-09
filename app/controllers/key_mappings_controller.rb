@@ -1,13 +1,11 @@
 class KeyMappingsController < ApplicationController
+  before_filter :find_key_mapping, :only => [:show, :edit, :update, :destroy]
 
   def reorder
-
     # グループ間を移動する場合
-    bef_keys = KeyMapping.where(group_id: params[:group_id]).map(&:id)
-    aft_keys = params[:keymapping].map(&:to_i)
-    increment = (aft_keys - bef_keys)
-    if increment.size > 0
-      add_key_mapping = KeyMapping.find(increment[0])
+    increment_id = get_increment_id(params[:keymapping], params[:group_id])
+    if increment_id
+      add_key_mapping = KeyMapping.find(increment_id)
       add_key_mapping.group_id = params[:group_id]
       add_key_mapping.save!
     end
@@ -22,7 +20,6 @@ class KeyMappingsController < ApplicationController
   end
 
   def show
-    @key_mapping = KeyMapping.find(params[:id])
   end
 
   def new
@@ -31,7 +28,6 @@ class KeyMappingsController < ApplicationController
   end
 
   def edit
-    @key_mapping = KeyMapping.find(params[:id])
     @group = @key_mapping.group
   end
 
@@ -40,9 +36,7 @@ class KeyMappingsController < ApplicationController
     @key_mapping = KeyMapping.new(params[:key_mapping])
     @key_mapping.group_id = group_id
 
-    if request.xhr?
-      @key_mapping.ordinal = KeyMapping.next_ordinal
-    end
+    @key_mapping.ordinal = KeyMapping.next_ordinal if request.xhr?
     
     status = @key_mapping.save
     if request.xhr?
@@ -60,7 +54,6 @@ class KeyMappingsController < ApplicationController
   end
 
   def update
-    @key_mapping = KeyMapping.find(params[:id])
     status =  @key_mapping.update_attributes(params[:key_mapping])
     xhr_response_render_json(status) and return if request.xhr?
     if status
@@ -71,7 +64,6 @@ class KeyMappingsController < ApplicationController
   end
 
   def destroy
-    @key_mapping = KeyMapping.find(params[:id])
     status = @key_mapping.destroy
     # if last_item?
     #   status = @key_mapping.update_attributes({key: '', content: '', ordinal: 1})
@@ -84,7 +76,17 @@ class KeyMappingsController < ApplicationController
 
   
   private
-  def last_item?(group_id)
-    KeyMapping.where(group_id: group_id).size == 1
+  def find_key_mapping
+    @key_mapping = KeyMapping.find(params[:id])
   end
+
+  def get_increment_id(key_mapping_ids, group_id)
+    bef_keys = KeyMapping.where(group_id: group_id).map(&:id)
+    aft_keys = key_mapping_ids.map(&:to_i)
+    (aft_keys - aft_keys)[0]
+  end
+
+  # def last_item?(group_id)
+  #   KeyMapping.where(group_id: group_id).size == 1
+  # end
 end

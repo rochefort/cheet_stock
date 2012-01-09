@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-
+  before_filter :find_group, :only => [:show, :edit, :update, :destroy]
   def reorder
     params[:group].each_with_index{|row, i| Group.update(row, {ordinal: i + 1})}
     render :nothing => true
@@ -10,7 +10,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
   end
 
   def new
@@ -18,7 +17,6 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.find(params[:id])
   end
 
   def create
@@ -45,7 +43,6 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group = Group.find(params[:id])
     status = @group.update_attributes(params[:group])
     xhr_response_render_json(status) and return if request.xhr?
 
@@ -56,10 +53,14 @@ class GroupsController < ApplicationController
     end
   end
 
-  def destroy    
-    @group = Group.find(params[:id])
+  def destroy
     status = @group.destroy
     xhr_response_render_json(status) and return if request.xhr?
     redirect_to groups_url
+  end
+  
+  private
+  def find_group
+    @group = Group.find(params[:id])
   end
 end
