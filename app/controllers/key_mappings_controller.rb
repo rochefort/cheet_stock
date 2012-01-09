@@ -4,6 +4,10 @@ class KeyMappingsController < ApplicationController
   def reorder
     # グループ間を移動する場合
     increment_id = get_increment_id(params[:keymapping], params[:group_id])
+    logger.info { "xxxxxxxxxxxxxxxx" }
+    logger.info { increment_id }
+    logger.info { "" }
+    logger.info { "" }
     if increment_id
       add_key_mapping = KeyMapping.find(increment_id)
       add_key_mapping.group_id = params[:group_id]
@@ -83,7 +87,7 @@ class KeyMappingsController < ApplicationController
   def get_increment_id(key_mapping_ids, group_id)
     bef_keys = KeyMapping.where(group_id: group_id).map(&:id)
     aft_keys = key_mapping_ids.map(&:to_i)
-    (aft_keys - aft_keys)[0]
+    (aft_keys - bef_keys)[0]
   end
 
   # def last_item?(group_id)
