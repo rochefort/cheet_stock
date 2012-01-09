@@ -17,11 +17,13 @@ $(function(){
     forcePlaceholderSize: true,
     opacity: 0.4,
     update: function() {
+      var objSort = $(this).sortable('serialize');
+      objSort['authenticity_token'] = $('#authenticity_token').val();
       $.ajax({
         url: '/groups/reorder',
         type: 'POST',
-        dataType: 'text',
-        data: $(this).sortable('serialize') + '&authenticity_token=' + $('#authenticity_token').val()
+        dataType: 'json',
+        data:  objSort
       })
     }
   })
