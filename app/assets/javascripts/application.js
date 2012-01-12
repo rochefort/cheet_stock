@@ -20,7 +20,6 @@ $(function(){
     if (e.keyCode == KEY_CODE_TAB) {
       var content = $(this).closest('tr').find('td.content');
       toggleElm(content);
-      content.find('.editor input').focus();
       return false;
     };
   });
@@ -34,7 +33,6 @@ $(function(){
       } else {
         var content = $(this).closest('tr').find('td.content');
         toggleElm(content);
-        content.next().focus();
       };
       return false;
     };
