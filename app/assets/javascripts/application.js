@@ -17,6 +17,12 @@ $(function(){
   // console.log(e.shiftKey);
   // console.log(e.ctrlKey);
   // console.log(e.altKey);
+  $('h2').live('keydown', (function(e){
+    if (e.keyCode == KEY_CODE_ENTER) {
+      $(this).blur();
+    };
+  }));
+
   $('td.key .editor input').live('keydown', (function(e){
     if (e.keyCode == KEY_CODE_TAB) {
       var content = $(this).closest('tr').find('td.content');
