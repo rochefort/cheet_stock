@@ -102,7 +102,6 @@ $(function(){
     $(this).css('background', '');
   });
   
-  
   $('.add-key-mapping').live('click', function(){
     var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
     var parentElm = $(this).closest('div.dragbox').find('table');
@@ -121,15 +120,18 @@ $(function(){
   });
   
   $('h2').live('blur', function(){
-    var groupName = $(this).find('.editor input').val();
-    $(this).find('.viewer').text(groupName);
+    var editor = $(this).find('.editor');
+    if (editor.css('display')=='block') {
+      var groupName = editor.find('input').val();
+      $(this).find('.viewer').text(groupName);
 
-    var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
-    var group = {'name': groupName};
-    var url = '/groups/' + groupId;
-    var data = {'_method': 'put', 'group': group};
-    ajaxWithJSON(url, data);
-    $(this).find('div').toggle();
+      var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
+      var group = {'name': groupName};
+      var url = '/groups/' + groupId;
+      var data = {'_method': 'put', 'group': group};
+      ajaxWithJSON(url, data);
+      $(this).find('div').toggle();
+    };
   });
 
   $('.delete-group').live('click', function(){
