@@ -197,14 +197,6 @@ $(function(){
       txtbox_group.val(txtbox_group.val()+"");
     }
   }
-  // function toggleElm(elm) {
-  //   var editor = elm.find('.editor');
-  //   elm.find('div').toggle();
-  //   var txtbox_group = editor.find('input');
-  //   txtbox_group.focus();
-  //   // カーソルをテキストボックスの最後に移動
-  //   txtbox_group.val(txtbox_group.val()+"");
-  // };
 
   //delete-keymapping
   $('.delete-keymapping').live('mouseover', function(){
