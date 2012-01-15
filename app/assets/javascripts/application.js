@@ -153,7 +153,23 @@ $(function(){
     displayInputElm($(this));
   });
 
-  // key-mapping更新処理
+  // key-mapping更新処理  
+  $('td.key').live('blur', function(){
+    updateKeyMappingAndToggleElm($(this), 'key');
+  });
+
+  $('td.content').live('blur', function(){
+    updateKeyMappingAndToggleElm($(this), 'content');
+  });
+
+  function updateKeyMappingAndToggleElm (elm, column_name) {
+    var editor = elm.find('.editor');
+    if (editor.css('display')=='block') {
+      updateKeyMapping(elm, column_name);
+      elm.find('div').toggle();
+    };
+  }
+
   function updateKeyMapping (elm, column_name) {
     // テキストボックスの内容でviewerを更新
     var val = elm.find('.editor input').val();
@@ -164,16 +180,7 @@ $(function(){
     var km = {};
     km[column_name] = val;
     ajaxUpdateKeyMapping(group_id, km_id, km);
-    elm.find('div').toggle();
   };
-  
-  $('td.key').live('blur', function(){
-    updateKeyMapping($(this), 'key');
-  });
-
-  $('td.content').live('blur', function(){
-    updateKeyMapping($(this), 'content');
-  });
 
   function ajaxUpdateKeyMapping (group_id, km_id, km) {
     var url = '/groups/' + group_id + '/key_mappings/' + km_id;
