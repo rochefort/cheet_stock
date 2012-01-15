@@ -80,6 +80,11 @@ h1 {
     tr {
       height: 22px;
 
+      td {
+        word-break: break-word;
+        word-wrap: break-word;
+      }
+      
       td.key {
         width: 40%;
         padding-left: 10px;
