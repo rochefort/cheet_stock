@@ -77,13 +77,9 @@ h1 {
   
   table {
     width: 100%;
-
     tr {
+      height: 22px;
 
-      td {
-        height: 18px;
-      }
-      
       td.key {
         width: 40%;
         padding-left: 10px;
@@ -101,6 +97,10 @@ h1 {
         display: none;
       }
     }
+    tr.nodata {
+      background-color: #F4F5E7;
+    }
+
   }
   .key .editor input{
     width: 7em;
@@ -114,7 +114,7 @@ h1 {
  Drag and Drop
 ------------------------------ */
 .column{
-  width:280px;
+  width:300px;
   margin-right:.5%;
   min-height:300px;
   background:#fff;
