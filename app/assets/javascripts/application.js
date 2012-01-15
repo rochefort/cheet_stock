@@ -17,15 +17,15 @@ $(function(){
   // console.log(e.shiftKey);
   // console.log(e.ctrlKey);
   // console.log(e.altKey);
-  $('td.key .editor input').keydown(function(e){
+  $('td.key .editor input').live('keydown', (function(e){
     if (e.keyCode == KEY_CODE_TAB) {
       var content = $(this).closest('tr').find('td.content');
       displayInputElm(content);
       return false;
     };
-  });
+  }));
 
-  $('td.content .editor input').keydown(function(e){
+  $('td.content .editor input').live('keydown', (function(e){
     if (e.keyCode == KEY_CODE_TAB) {
       if (e.shiftKey) {
         var key = $(this).closest('tr').find('td.key');
@@ -37,7 +37,7 @@ $(function(){
       };
       return false;
     };
-  });
+  }));
 
   function ajaxWithJSON (url, data, succ_func) {
     $.ajax({
