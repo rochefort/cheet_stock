@@ -39,13 +39,13 @@ $(function(){
     };
   }));
 
-  function ajaxWithJSON (url, data, succ_func) {
+  function ajaxWithJSON (url, data, succFunc) {
     $.ajax({
       url: url,
       type: 'POST',
       dataType: 'json',
       data:  data,
-      success: succ_func
+      success: succFunc
     })
   }
 
@@ -69,24 +69,24 @@ $(function(){
     cursor: 'move',
     opacity: 0.4,
     update: function(event, ui) {
-      var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
+      var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
       var objSort = $(this).sortable('serialize');
       objSort['authenticity_token'] = $('#authenticity_token').val();
-      var url = '/groups/' + group_id + '/key_mappings/reorder';
+      var url = '/groups/' + groupId + '/key_mappings/reorder';
       ajaxWithJSON(url, objSort);
     }
   })
   .disableSelection();
 
   $('#add-group').click(function(){
-    var succ_func = function(ajax){
+    var succFunc = function(ajax){
       if (ajax.status === 'success') {
         $('.column').append(ajax.html);
         //TODO:focus
         $('.key-mapping table tbody').sortable('refresh');
       }
     };
-    ajaxWithJSON('groups', '', succ_func);
+    ajaxWithJSON('groups', '', succFunc);
   });
 
   $('.add-key-mapping').live('mouseover', function(){
@@ -98,16 +98,16 @@ $(function(){
   
   
   $('.add-key-mapping').live('click', function(){
-    var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
-    var parent_elm = $(this).closest('div.dragbox').find('table');
-    var url = '/groups/' + group_id + '/key_mappings/';
-    var succ_func = function(ajax){
+    var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
+    var parentElm = $(this).closest('div.dragbox').find('table');
+    var url = '/groups/' + groupId + '/key_mappings/';
+    var succFunc = function(ajax){
       if (ajax.status === 'success') {
-        parent_elm.append(ajax.html);
+        parentElm.append(ajax.html);
         //TODO:focus
       }
     };
-    ajaxWithJSON(url, '', succ_func);
+    ajaxWithJSON(url, '', succFunc);
   });
 
   $('h2').live('click', function(){
@@ -115,27 +115,27 @@ $(function(){
   });
   
   $('h2').live('blur', function(){
-    var group_name = $(this).find('.editor input').val();
-    $(this).find('.viewer').text(group_name);
+    var groupName = $(this).find('.editor input').val();
+    $(this).find('.viewer').text(groupName);
 
-    var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
-    var group = {'name': group_name};
-    var url = '/groups/' + group_id;
+    var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
+    var group = {'name': groupName};
+    var url = '/groups/' + groupId;
     var data = {'_method': 'put', 'group': group};
     ajaxWithJSON(url, data);
     $(this).find('div').toggle();
   });
 
   $('.delete-group').live('click', function(){
-    var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
+    var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
     $('#delete-group-msg').dialog({
       title: "確認",
       buttons: {
         'yes': function(event) {
-          var url = '/groups/' + group_id;
+          var url = '/groups/' + groupId;
           var data = {'_method': 'delete'};
-          var succ_func = function (ajax){ $('#group-' + group_id).remove();};
-          ajaxWithJSON(url, data, succ_func);
+          var succFunc = function (ajax){ $('#group-' + groupId).remove();};
+          ajaxWithJSON(url, data, succFunc);
           $(this).dialog("close");
         },
         'no': function(event) {
@@ -162,34 +162,34 @@ $(function(){
     updateKeyMappingAndToggleElm($(this), 'content');
   });
 
-  function updateKeyMappingAndToggleElm (elm, column_name) {
+  function updateKeyMappingAndToggleElm (elm, columnName) {
     var editor = elm.find('.editor');
     if (editor.css('display')=='block') {
-      updateKeyMapping(elm, column_name);
+      updateKeyMapping(elm, columnName);
       elm.find('div').toggle();
     };
   }
 
-  function updateKeyMapping (elm, column_name) {
+  function updateKeyMapping (elm, columnName) {
     // テキストボックスの内容でviewerを更新
     var val = elm.find('.editor input').val();
     elm.find('.viewer').text(val);
 
-    var group_id = elm.closest('div.dragbox').attr('id').split('-')[1];
-    var km_id = elm.parent().attr('id').split('-')[1];    
+    var groupId = elm.closest('div.dragbox').attr('id').split('-')[1];
+    var kmId = elm.parent().attr('id').split('-')[1];
     var km = {};
-    km[column_name] = val;
-    ajaxUpdateKeyMapping(group_id, km_id, km);
+    km[columnName] = val;
+    ajaxUpdateKeyMapping(groupId, kmId, km);
   };
 
-  function ajaxUpdateKeyMapping (group_id, km_id, km) {
-    var url = '/groups/' + group_id + '/key_mappings/' + km_id;
+  function ajaxUpdateKeyMapping (groupId, kmId, km) {
+    var url = '/groups/' + groupId + '/key_mappings/' + kmId;
     var data = {'_method': 'put', 'key_mapping': km}
     ajaxWithJSON(url, data);
   };
 
-  function ajaxDeleteKeyMapping (group_id, km_id, viewer_text, editor_text) {
-    var url = '/groups/' + group_id + '/key_mappings/' + km_id;
+  function ajaxDeleteKeyMapping (groupId, kmId, viewerText, editorText) {
+    var url = '/groups/' + groupId + '/key_mappings/' + kmId;
     var data = {'_method': 'delete'};
     ajaxWithJSON(url, data);
   }
@@ -198,10 +198,10 @@ $(function(){
     var editor = elm.find('.editor');
     if (editor.css('display')=='none') {
       elm.find('div').toggle();
-      var txtbox_group = editor.find('input');
-      txtbox_group.focus();
+      var txtboxGroup = editor.find('input');
+      txtboxGroup.focus();
       // カーソルをテキストボックスの最後に移動
-      txtbox_group.val(txtbox_group.val()+"");
+      txtboxGroup.val(txtboxGroup.val()+"");
     }
   }
 
@@ -215,20 +215,20 @@ $(function(){
   });
 
   $('.delete-keymapping').live('click', function(){
-    var group_id = $(this).closest('div.dragbox').attr('id').split('-')[1];
-    var km_id = $(this).parent().attr('id').split('-')[1];
+    var groupId = $(this).closest('div.dragbox').attr('id').split('-')[1];
+    var kmId = $(this).parent().attr('id').split('-')[1];
     
     // delete
-    var remove_elm = $(this).closest('tr');
+    var removeElm = $(this).closest('tr');
     // edit
-    var viewer_elm = $(this).parent().find('.viewer');
-    var editor_elm = $(this).parent().find('.editor input');
+    var viewerElm = $(this).parent().find('.viewer');
+    var editorElm = $(this).parent().find('.editor input');
     $('#delete-keymapping-msg').dialog({
       title: "確認",
       buttons: {
         'yes': function(event) {
-          ajaxDeleteKeyMapping(group_id, km_id);
-          remove_elm.remove();
+          ajaxDeleteKeyMapping(groupId, kmId);
+          removeElm.remove();
           $(this).dialog("close");
         },
         'no': function(event) {
