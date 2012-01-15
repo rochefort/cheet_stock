@@ -23,6 +23,9 @@ $(function(){
       displayInputElm(content);
       return false;
     };
+    if (e.keyCode == KEY_CODE_ENTER) {
+      $(this).blur();
+    };
   }));
 
   $('td.content .editor input').live('keydown', (function(e){
@@ -36,6 +39,9 @@ $(function(){
         displayInputElm(content);
       };
       return false;
+    };
+    if (e.keyCode == KEY_CODE_ENTER) {
+      $(this).blur();
     };
   }));
 
