@@ -112,7 +112,7 @@ $(function(){
   });
 
   $('h2').live('click', function(){
-    toggleElm($(this));
+    displayInputElm($(this));
   });
   
   $('h2').live('blur', function(){
@@ -147,11 +147,11 @@ $(function(){
   });
 
   $('td.key').live('click', function(){
-    toggleElm($(this));
+    displayInputElm($(this));
   });
 
   $('td.content').live('click', function(){
-    toggleElm($(this));
+    displayInputElm($(this));
   });
 
   // key-mapping更新処理
@@ -186,6 +186,12 @@ $(function(){
     var url = '/groups/' + group_id + '/key_mappings/' + km_id;
     var data = {'_method': 'delete'};
     ajaxWithJSON(url, data);
+  }
+  
+  function displayInputElm (elm) {
+  	if (elm.find('div.editor').css('display')=='none') {
+      	toggleElm(elm);
+  	}
   }
   
   function toggleElm(elm) {
