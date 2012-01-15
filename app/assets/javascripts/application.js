@@ -10,6 +10,7 @@
 //= require_tree .
 $(function(){
   var KEY_CODE_TAB = 9;
+  var KEY_CODE_ENTER = 13;
 
 
   // console.log(e.keyCode);
@@ -19,7 +20,7 @@ $(function(){
   $('td.key .editor input').keydown(function(e){
     if (e.keyCode == KEY_CODE_TAB) {
       var content = $(this).closest('tr').find('td.content');
-      toggleElm(content);
+      displayInputElm(content);
       return false;
     };
   });
@@ -28,17 +29,15 @@ $(function(){
     if (e.keyCode == KEY_CODE_TAB) {
       if (e.shiftKey) {
         var key = $(this).closest('tr').find('td.key');
-        toggleElm(key);
+        displayInputElm(key);
         key.find('.editor input').focus();
       } else {
         var content = $(this).closest('tr').find('td.content');
-        toggleElm(content);
+        displayInputElm(content);
       };
       return false;
     };
   });
-
-
 
   function ajaxWithJSON (url, data, succ_func) {
     $.ajax({
@@ -189,19 +188,23 @@ $(function(){
   }
   
   function displayInputElm (elm) {
-  	if (elm.find('div.editor').css('display')=='none') {
-      	toggleElm(elm);
-  	}
-  }
-  
-  function toggleElm(elm) {
     var editor = elm.find('.editor');
-    elm.find('div').toggle();
-    var txtbox_group = editor.find('input');
-    txtbox_group.focus();
-    // カーソルをテキストボックスの最後に移動
-    txtbox_group.val(txtbox_group.val()+"");
-  };
+    if (editor.css('display')=='none') {
+      elm.find('div').toggle();
+      var txtbox_group = editor.find('input');
+      txtbox_group.focus();
+      // カーソルをテキストボックスの最後に移動
+      txtbox_group.val(txtbox_group.val()+"");
+    }
+  }
+  // function toggleElm(elm) {
+  //   var editor = elm.find('.editor');
+  //   elm.find('div').toggle();
+  //   var txtbox_group = editor.find('input');
+  //   txtbox_group.focus();
+  //   // カーソルをテキストボックスの最後に移動
+  //   txtbox_group.val(txtbox_group.val()+"");
+  // };
 
   //delete-keymapping
   $('.delete-keymapping').live('mouseover', function(){
