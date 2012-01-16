@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
     status = @group.save
     if request.xhr?
       xhr_response_render_json(status) do
-        html = render_to_string partial: 'sheets/group', locals: { group: @group }
+        html = render_to_string partial: 'sheets/group', collection: [@group]
         {html: html}
       end
       return

@@ -8,9 +8,7 @@
     </div>
     <div class="key-mapping">
       <table>
-        <% group.key_mappings.each do |km| %>
-          <%= render 'key_mapping', km: km %>
-        <% end %>
+        <%= render partial: 'key_mapping', collection: group.key_mappings %>
       </table>
     </div>
     <div class="add-key-mapping" title="新規キーマッピングを追加します"></div>
