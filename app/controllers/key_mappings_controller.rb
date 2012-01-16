@@ -45,7 +45,7 @@ class KeyMappingsController < ApplicationController
     status = @key_mapping.save
     if request.xhr?
       xhr_response_render_json(status) do
-        html = render_to_string partial: 'sheets/key_mapping', collection: [@key_mapping]
+        html = render_to_string partial: 'shared/key_mapping', collection: [@key_mapping]
         {html: html}
       end
       return

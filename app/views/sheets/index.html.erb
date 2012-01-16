@@ -3,7 +3,7 @@
   <a href="#">New</a>
 </div>
 <div class="column">
-<%= render partial: 'group', collection: @groups %>
+<%= render partial: 'shared/group', collection: @groups %>
 </div>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 

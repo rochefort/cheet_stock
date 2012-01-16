@@ -23,13 +23,13 @@ class GroupsController < ApplicationController
     @group = Group.new(params[:group])
     if request.xhr?
       @group.ordinal = Group.next_ordinal
-      #@group.key_mappings.build({key: '', content: '', ordinal: 1})
+      @group.key_mappings.build({key: '', content: '', ordinal: 1})
     end
     
     status = @group.save
     if request.xhr?
       xhr_response_render_json(status) do
-        html = render_to_string partial: 'sheets/group', collection: [@group]
+        html = render_to_string partial: 'shared/group', collection: [@group]
         {html: html}
       end
       return
