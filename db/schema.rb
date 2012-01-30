@@ -11,13 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102175359) do
+ActiveRecord::Schema.define(:version => 20120130161104) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.integer  "ordinal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "column_no",  :default => 1
+    t.integer  "sheet_id"
   end
 
   create_table "key_mappings", :force => true do |t|
@@ -25,6 +27,13 @@ ActiveRecord::Schema.define(:version => 20120102175359) do
     t.string   "content"
     t.integer  "ordinal"
     t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sheets", :force => true do |t|
+    t.string   "name"
+    t.integer  "max_column"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

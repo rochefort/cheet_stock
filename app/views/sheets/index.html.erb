@@ -2,9 +2,11 @@
 <div id="add-group" title="新規グループを追加します">
   <a href="#">New</a>
 </div>
-<div class="column">
-<%= render partial: 'shared/group', collection: @groups %>
+<% (1..@sheet.max_column).each do |c| %>
+<div id="column_<%=c%>" class="column">
+<%= render partial: 'shared/group', collection: @groups[c] %>
 </div>
+<% end %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 <div id="delete-group-msg"　title="グループを削除します">
