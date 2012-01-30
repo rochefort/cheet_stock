@@ -46,3 +46,5 @@ module CheetStock
     config.assets.version = '1.0'
   end
 end
+
+Hirb.enable if %w(development test).any? { |env| env == Rails.env } and defined? Hirb
